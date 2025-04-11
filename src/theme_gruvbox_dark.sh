@@ -30,10 +30,10 @@ theme_set_dark() {
   # active window title colors
   local _active_window_title_bg=${col_yellow2}
   if [[ "$_statusbar_alpha" == "true" ]]; then _active_window_title_bg="default"; fi
-  tmux_append_setwo "window-status-current-style" "bg=${_active_window_title_bg},fg=${col_bg1}" # TODO cosider removing red!
+  tmux_append_setwo "window-status-current-style" "bg=${_active_window_title_bg},fg=${col_bg1}"
 
   # pane border
-  tmux_append_seto "pane-active-border-style" "fg=${col_green2}"
+  tmux_append_seto "pane-active-border-style" "fg=${col_orange2}"
   tmux_append_seto "pane-border-style" "fg=${col_bg1}"
 
   # message infos
@@ -60,7 +60,9 @@ theme_set_dark() {
   tmux_append_seto "status-right-length" "80"
   tmux_append_setwo "window-status-separator" ""
 
-  tmux_append_seto "status-left" "#[bg=${col_bg3},fg=${col_fg3}] ${_left_status_a} #[bg=${col_bg1},fg=${col_bg3},nobold,noitalics,nounderscore]"
+  local title_bar_bg=${col_bg3}
+  local title_bar_fg=${col_fg3}
+  tmux_append_seto "status-left" "#[bg=${title_bar_bg},fg=${col_fg3}] ${_left_status_a} #[bg=${col_bg1},fg=${title_bar_bg},nobold,noitalics,nounderscore]"
 
   # right status
   local _status_right_bg=${col_bg1}
@@ -69,11 +71,13 @@ theme_set_dark() {
 
   # current window
   local _current_window_status_format_bg=${col_bg1}
+  local _current_active_bg_color=${col_green2}
   if [[ "$_statusbar_alpha" == "true" ]]; then _current_window_status_format_bg="default"; fi
-  tmux_append_setwo "window-status-current-format" "#[bg=${col_green2},fg=${col_bg1},nobold,noitalics,nounderscore]#[bg=${col_green2},fg=${col_bg2}] #I #[bg=${col_green2},fg=${col_bg2},bold] #W#{?window_zoomed_flag,*Z,} #{?window_end_flag,#[bg=${_current_window_status_format_bg}],#[bg=${col_bg1}]}#[fg=${col_green2},nobold,noitalics,nounderscore]"
+  tmux_append_setwo "window-status-current-format" "#[bg=${_current_active_bg_color},fg=${col_bg1},nobold,noitalics,nounderscore]#[bg=${_current_active_bg_color},fg=${col_bg2}] #I #[bg=${_current_active_bg_color},fg=${col_bg2},bold] #W#{?window_zoomed_flag,*Z,} #{?window_end_flag,#[bg=${_current_window_status_format_bg}],#[bg=${col_bg1}]}#[fg=${_current_active_bg_color},nobold,noitalics,nounderscore]"
 
   # default window
   local _default_window_status_format_bg=${col_bg1}
+  local _window_bg=${col_bg2}
   if [[ "$_statusbar_alpha" == "true" ]]; then _default_window_status_format_bg="default"; fi
-  tmux_append_setwo "window-status-format" "#[bg=${col_bg2},fg=${col_bg1},noitalics]#[bg=${col_bg2},fg=${col_fg1}] #I #[bg=${col_bg2},fg=${col_fg1}] #W #{?window_end_flag,#[bg=${_default_window_status_format_bg}],#[bg=${col_bg1}]}#[fg=${col_bg2},noitalics]"
+  tmux_append_setwo "window-status-format" "#[bg=${_window_bg},fg=${col_bg1},noitalics]#[bg=${_window_bg},fg=${col_fg1}] #I #[bg=${_window_bg},fg=${col_fg1}] #W #{?window_end_flag,#[bg=${_default_window_status_format_bg}],#[bg=${col_bg1}]}#[fg=${_window_bg},noitalics]"
 }
